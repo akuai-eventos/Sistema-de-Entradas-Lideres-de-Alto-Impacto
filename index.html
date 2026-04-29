@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akuai Eventos | Sistema de Entradas</title>
+
+  <!-- NO CAMBIÉ TIPOGRAFÍAS -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- MODAL CONFIRMACIÓN -->
+  <div id="modal-confirm" class="modal-overlay">
+    <div class="custom-modal">
+      <h3>Verifica tus datos</h3>
+      <p>Confirma que la información del registro es correcta antes de enviarla.</p>
+
+      <div class="modal-info">
+        <p><strong>Nombre principal:</strong> <span id="confirm-name"></span></p>
+        <p><strong>Email:</strong> <span id="confirm-email"></span></p>
+        <p><strong>Modalidad:</strong> <span id="confirm-modalidad"></span></p>
+        <p><strong>Cantidad de entradas:</strong> <span id="confirm-cantidad"></span></p>
+        <p><strong>Asesor:</strong> <span id="confirm-asesor"></span></p>
+        <p><strong>Método:</strong> <span id="confirm-metodo"></span></p>
+        <p><strong>Referencia:</strong> <span id="confirm-referencia"></span></p>
+        <p><strong>Capture:</strong> <span id="confirm-capture"></span></p>
+        <p><strong>Total USD:</strong> <span id="confirm-total-usd"></span></p>
+        <p><strong>Tasa:</strong> <span id="confirm-tasa-bcv"></span></p>
+        <p><strong>Total Bs:</strong> <span id="confirm-total-bs"></span></p>
+      </div>
+
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancel" onclick="cerrarConfirm()">Editar</button>
+        <button type="button" class="btn-confirm" onclick="enviarRegistro()">Sí, registrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ÉXITO -->
+  <div id="modal-success" class="modal-overlay">
+    <div class="custom-modal">
+      <div class="success-icon">✓</div>
+      <h3>¡Registro recibido!</h3>
+      <p>Tu registro fue recibido correctamente. Al confirmar el pago, se enviará el QR de entrada al correo proporcionado de cada participante.</p>
+      <button type="button" class="btn-confirm full-btn" onclick="cerrarExito()">Aceptar</button>
+    </div>
+  </div>
+
+  <!-- MODAL MENSAJE -->
+  <div id="modal-message" class="modal-overlay">
+    <div class="custom-modal">
+      <h3 id="message-title">Akuai Eventos</h3>
+      <p id="message-text"></p>
+      <button type="button" class="btn-confirm full-btn" onclick="cerrarMensaje()">Aceptar</button>
+    </div>
+  </div>
+
+  <header>
+    <div class="wrap topbar">
+      <a href="#" class="brand">
+        <div class="logo"><img src="isotipopng.png" alt="Akuai"></div>
+        <div>
+          <strong>Akuai Eventos</strong>
+          <span>@akuai_eventos · Mérida</span>
+        </div>
+      </a>
+
+      <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#evento">Evento</a>
+        <a href="#registro">Registro</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <section id="inicio" class="hero">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <div class="badge">Sistema oficial de entradas para Líderes de Alto Impacto</div>
+          <h1>Elevando sueños y transformando realidades.</h1>
+          <p class="lead">Excelencia y calidad en cada detalle.</p>
+          <button type="button" onclick="mostrarFormulario()" class="btn-main">Adquirir entrada</button>
+        </div>
+
+        <div class="stat-card">
+          <h3>Sobre Akuai</h3>
+          <p>Nuestro nombre proviene de “a kuai”, que significa <strong>altura</strong> en warao,  y refleja nuestra esencia: elevar ideas, sueños y capacidades.</p>
+          <a href="https://instagram.com/akuai_eventos" target="_blank" class="btn-main ghost-btn">Ver Instagram</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="evento" class="reveal">
+      <div class="section-divider" aria-hidden="true">
+        <svg class="divider-icon" viewBox="0 0 792 612" xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false">
+          <g fill="currentColor">
+            <path d="M701.55,375.866c-68.514-45.727-137.357-90.976-205.325-137.497c-18.329-12.546-32.705-12.939-49.937,1.333
+            c-22.768,18.856-46.529,36.682-71.017,53.254c-17.1,11.572-13.663,18.577,0.794,29.052c19.268,13.96,40.581,25.801,56.588,45.826
+            c-16.151,4.196-28.076-3.177-40.039-8.633c-17.947-8.185-37.85-14.595-52.528-26.949c-44.322-37.302-84.764-36.886-129.639,0.396
+            c-24.266,20.16-55.016,32.561-82.842,48.462c-7.111,4.17-11.065,3.012-10.317-6.078c47.395-40.634,94.899-81.143,142.086-122.016
+            c8.774-7.6,16.166-5.411,24.055,0.397c15.161,11.163,30.837,21.718,45.261,33.761c12.189,10.177,20.297,9.88,30.867-3.032
+            c28.352-34.636,58.92-67.478,86.986-102.331c15.368-19.084,29.682-20.176,47.407-5.058
+            c61.978,52.866,124.124,105.532,182.129,162.828c11.356,11.218,23.647,21.495,35.506,32.205
+            C710.845,379.514,707.097,379.889,701.55,375.866z"/>
+          </g>
+        </svg>
+      </div>
+
+      <h2 class="section-title">Evento</h2>
+
+      <div class="hero-card event-card">
+        <span class="badge">Acreditación con QR</span>
+        <h1>Líderes de Alto Impacto</h1>
+        <p class="lead">Es un evento...</p>
+
+        <div class="info-grid">
+          <div>
+            <strong>Precio</strong><br>
+            <span>$5 por persona</span>
+          </div>
+          <div>
+            <strong>Lugar</strong><br>
+            <span>Hotel Tibisay Mérida - Salón Sierra</span>
+          </div>
+          <div>
+            <strong>Hora</strong><br>
+            <span>8:00 AM</span>
+          </div>
+        </div>
+
+        <button type="button" onclick="mostrarFormulario()" class="btn-main top-space">Adquirir entrada</button>
+      </div>
+    </section>
+
+    <section id="registro" class="cta-registry reveal">
+      <div class="section-divider" aria-hidden="true">
+        <svg class="divider-icon" viewBox="0 0 792 612" xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false">
+          <g fill="currentColor">
+            <path d="M701.55,375.866c-68.514-45.727-137.357-90.976-205.325-137.497c-18.329-12.546-32.705-12.939-49.937,1.333
+            c-22.768,18.856-46.529,36.682-71.017,53.254c-17.1,11.572-13.663,18.577,0.794,29.052c19.268,13.96,40.581,25.801,56.588,45.826
+            c-16.151,4.196-28.076-3.177-40.039-8.633c-17.947-8.185-37.85-14.595-52.528-26.949c-44.322-37.302-84.764-36.886-129.639,0.396
+            c-24.266,20.16-55.016,32.561-82.842,48.462c-7.111,4.17-11.065,3.012-10.317-6.078c47.395-40.634,94.899-81.143,142.086-122.016
+            c8.774-7.6,16.166-5.411,24.055,0.397c15.161,11.163,30.837,21.718,45.261,33.761c12.189,10.177,20.297,9.88,30.867-3.032
+            c28.352-34.636,58.92-67.478,86.986-102.331c15.368-19.084,29.682-20.176,47.407-5.058
+            c61.978,52.866,124.124,105.532,182.129,162.828c11.356,11.218,23.647,21.495,35.506,32.205
+            C710.845,379.514,707.097,379.889,701.55,375.866z"/>
+          </g>
+        </svg>
+      </div>
+
+<h2 class="section-title">Registro de entradas</h2>
+
+<div class="stock-progress-box">
+  <div class="stock-progress-top">
+    <strong>Disponibilidad de entradas</strong>
+    <span id="stock-progress-text">Cargando...</span>
+  </div>
+
+  <div class="stock-progress-bar">
+    <div id="stock-progress-fill"></div>
+  </div>
+
+<div id="stock-hype-message" class="stock-hype-message"></div>
+<div id="stock-message" class="stock-message"></div>
+
+<div id="cta-content" class="cta-content">        
+  
+<div class="important-info-box">
+  <strong>Información importante</strong>
+  <p>
+    Cada entrada es individual. Si realizas un registro grupal, debes ingresar los datos de todas las personas que asistirán, incluyendo a quien realiza el registro.
+  </p>
+  <p>
+    Puedes registrar máximo <strong>5 personas por grupo</strong>. El pago puede hacerse en una sola operación, pero cada participante recibirá su propio código QR.
+  </p>
+  <p>
+  </p>
+</div>
+
+        <button type="button" onclick="mostrarFormulario()" class="btn-main big-btn">Iniciar registro</button>
+      </div>
+
+      <div id="form-wrapper">
+        <div class="form-container">
+          <h3>Formulario de registro</h3>
+
+          <form id="akuaiForm">
+            <div class="section-title-form">1. Datos del primer participante</div>
+
+            <div class="form-grid">
+              <div class="question-box">
+                <label>Nombre y Apellido <span>*</span></label>
+                <input type="text" id="f-nombre" class="input-field" required placeholder="Nombre y Apellido">
+              </div>
+
+              <div class="question-box">
+                <label>Cédula <span>*</span></label>
+                <input type="text" id="f-cedula" class="input-field" required placeholder="V-00000000">
+              </div>
+
+              <div class="question-box">
+                <label>WhatsApp <span>*</span></label>
+                <input type="tel" id="f-whatsapp" class="input-field" required placeholder="04xx-xxxxxxx">
+              </div>
+
+              <div class="question-box">
+                <label>Email <span>*</span></label>
+                <input type="email" id="f-email" class="input-field" required placeholder="correo@ejemplo.com">
+              </div>
+
+              <div class="question-box">
+                <label>Categoría <span>*</span></label>
+                <select id="f-categoria" class="input-field" required>
+                  <option value="">Selecciona una categoría</option>
+                  <option value="General">Público General</option>
+                  <option value="VIP">Coordinador HELAV</option>
+                  <option value="Cortesía">Personal HELAV</option>
+                  <option value="Staff"></option>
+                  <option value="Patrocinante">Patrocinante</option>
+                </select>
+              </div>
+
+              <div class="question-box">
+                <label>Asesor <span>*</span></label>
+                <input type="text" id="f-asesor" class="input-field" required placeholder="Nombre del asesor">
+              </div>
+            </div>
+
+            <div class="section-title-form">2. Modalidad del registro</div>
+
+            <div class="question-box">
+              <label>¿Cuántas entradas deseas registrar? <span>*</span></label>
+
+              <div class="qty-control entrada-qty">
+                <button type="button" class="qty-btn qty-minus" onclick="cambiarCantidadEntradas(-1)">−</button>
+                <input type="number" id="f-cantidad-entradas" min="1" max="5" value="1" readonly required>
+                <button type="button" class="qty-btn qty-plus" onclick="cambiarCantidadEntradas(1)">+</button>
+              </div>
+
+              <p class="helper-text">Máximo 5 personas por registro.</p>
+            </div>
+
+            <div id="integrantes-wrapper" class="integrantes-wrapper"></div>
+
+            <div class="section-title-form">3. Total</div>
+
+            <div class="total-box">
+              <div class="total-line">
+                <span>Modalidad</span>
+                <strong id="modalidad-text">Individual</strong>
+              </div>
+
+              <div class="total-line">
+                <span>Precio por entrada</span>
+                <strong>$<span id="precio-entrada-text">5.00</span></strong>
+              </div>
+
+              <div class="total-line">
+                <span>Cantidad de entradas</span>
+                <strong><span id="entradas-total-text">1</span></strong>
+              </div>
+
+              <div class="total-line">
+                <span>Total en dólares</span>
+                <strong>$<span id="total-usd-text">5.00</span></strong>
+              </div>
+
+              <div class="total-line">
+                <span>Tasa</span>
+                <strong>Bs <span id="tasa-bcv-text">--</span></strong>
+              </div>
+
+              <div class="total-line total-grand">
+                <span>Total en bolívares</span>
+                <strong>Bs <span id="total-bs-text">--</span></strong>
+              </div>
+            </div>
+
+            <div class="section-title-form">4. Pago</div>
+
+            <div class="question-box">
+              <label>Método de pago <span>*</span></label>
+              <select id="f-metodo" class="input-field" required onchange="mostrarDatosPago()">
+                <option value="">Selecciona una opción</option>
+                <option value="Pago móvil">Pago móvil</option>
+                <option value="Transferencia">Transferencia</option>
+                <option value="Efectivo $">Efectivo $</option>
+              </select>
+            </div>
+
+            <div id="bloque-datos-pago" class="payment-hidden">
+              <button type="button" class="btn-payment-info" onclick="togglePago()">
+                Ver datos para transferir
+              </button>
+
+              <div id="datos-pago" class="datos-pago">
+                <p><strong>Banco:</strong> Banco de Venezuela</p>
+                <p><strong>Titular:</strong> Nombre del responsable</p>
+                <p><strong>Cédula/RIF:</strong> V-00000000</p>
+                <p><strong>Teléfono pago móvil:</strong> 04XX-XXXXXXX</p>
+              </div>
+            </div>
+
+            <div class="question-box">
+              <label>Referencia de pago <span>*</span></label>
+              <input type="text" id="f-referencia" class="input-field" required placeholder="Últimos 6 dígitos de la referencia">
+              <small class="file-note">Si su pago es en Efectivo $, por favor adjunte los números de serie.</small>
+
+            </div>
+
+            <div class="question-box file-box">
+              <label>Capture o comprobante <span>*</span></label>
+              <input type="file" id="f-capture" accept="image/*,.pdf" required>
+              <small class="file-note">Si su pago es en Efectivo $, por favor adjunte foto del billete.</small>
+            </div>
+
+            <button type="submit" class="btn-main submit-btn">Revisar y registrar</button>
+            <button type="button" class="close-form" onclick="cerrarFormulario()">Cancelar registro</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+<section id="contacto" class="reveal">
+      <div class="section-divider" aria-hidden="true">
+  <svg class="divider-icon" viewBox="0 0 792 612" xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false">
+    <g fill="currentColor">
+      <path d="M701.55,375.866c-68.514-45.727-137.357-90.976-205.325-137.497c-18.329-12.546-32.705-12.939-49.937,1.333
+      c-22.768,18.856-46.529,36.682-71.017,53.254c-17.1,11.572-13.663,18.577,0.794,29.052c19.268,13.96,40.581,25.801,56.588,45.826
+      c-16.151,4.196-28.076-3.177-40.039-8.633c-17.947-8.185-37.85-14.595-52.528-26.949c-44.322-37.302-84.764-36.886-129.639,0.396
+      c-24.266,20.16-55.016,32.561-82.842,48.462c-7.111,4.17-11.065,3.012-10.317-6.078c47.395-40.634,94.899-81.143,142.086-122.016
+      c8.774-7.6,16.166-5.411,24.055,0.397c15.161,11.163,30.837,21.718,45.261,33.761c12.189,10.177,20.297,9.88,30.867-3.032
+      c28.352-34.636,58.92-67.478,86.986-102.331c15.368-19.084,29.682-20.176,47.407-5.058
+      c61.978,52.866,124.124,105.532,182.129,162.828c11.356,11.218,23.647,21.495,35.506,32.205
+      C710.845,379.514,707.097,379.889,701.55,375.866z"/>
+      <path d="M117.289,375.031c3.44,2.025,6.88,4.05,10.318,6.077c-11.159,11.922-25.97,17.792-43.102,21.525
+      C95.433,393.432,106.361,384.232,117.289,375.031z"/>
+      <path d="M701.55,375.866c3.345-1.36,6.69-2.72,10.036-4.08c10.997,4.268,18.138,12.494,28.181,27.267
+      C722.217,391.152,711.123,384.87,701.55,375.866z"/>
+    </g>
+  </svg>
+</div>
+
+  <h2 class="section-title">¿Tienes alguna duda?</h2>
+
+  <div class="contact-layout">
+    <div>
+      <h3>Contáctanos</h3>
+      <p> Si necesitas ayuda con tu registro, el proceso de pago o la confirmación de tu entrada, haz clic en el ícono de WhatsApp y escríbenos. Con gusto te orientaremos para que completes tu inscripción correctamente y recibas tu código QR de acceso.</p>
+    </div>
+
+    <div class="phone-container">
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="camera-notch"></div>
+          <div class="phone-header">
+            <span id="phone-clock">12:00</span>
+            <span>📶 🔋</span>
+          </div>
+
+          <div class="phone-notification">
+            <div class="whatsapp-mini">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="18">
+            </div>
+            <div>
+              <strong>Akuai Eventos</strong>
+              <span>No olvides seguirnos en instagram... 🏔️</span>
+            </div>
+          </div>
+
+          <div class="apps-grid">
+            <a href="https://wa.me/584164715431?text=%C2%A1Hola%2C%20Akuai%20Eventos%21%F0%9F%91%8B%F0%9F%8F%BB%0A%0ASoy%20%28Nombre%20y%20Apellido%29%20y%20me%20encantar%C3%ADa%20realizar%20un%20donativo%20para%20Arefest.%E2%9C%A8%0A%0AMi%20aporte%20ser%C3%ADa%3A%20%28Monetario%20o%20Material%2C%20por%20favor%20especifique%29%20y%20me%20gustar%C3%ADa%20apoyar%20con%3A%20%28Por%20favor%2C%20mencione%20su%20aporte%29.%F0%9F%98%8A" target="_blank" class="app-item">              
+              <div class="app-icon whatsapp-bg">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="30">
+              </div>
+              <span>WhatsApp</span>
+            </a>
+
+            <a href="https://instagram.com/akuai_eventos" target="_blank" class="app-item">
+              <div class="app-icon instagram-bg">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="32">
+              </div>
+              <span>Instagram</span>
+            </a>
+          </div>
+
+          <p class="phone-bottom">Haz click en los íconos</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<section class="footer-banner">
+  <img src="banner.png" alt="Akuai Eventos">
+</section>
+
+<footer>
+  <div class="wrap">
+    © <span id="year"></span> Akuai Eventos. Todos los derechos reservados.
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
