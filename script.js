@@ -509,7 +509,7 @@ async function enviarRegistro() {
     const datos = new URLSearchParams();
     datos.append("action", "reservar");
     datos.append("fecha", registroPendiente.fecha);
-    datos.append("participantes_json", JSON.stringify(registroPendiente.participantes));
+    datos.append("personas_json", JSON.stringify(registroPendiente.participantes));    
     datos.append("asesor", registroPendiente.asesor);
     datos.append("modalidad", registroPendiente.modalidad);
     datos.append("cantidad_entradas", registroPendiente.cantidad_entradas);
