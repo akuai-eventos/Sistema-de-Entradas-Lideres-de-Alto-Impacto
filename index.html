@@ -167,27 +167,28 @@
     <div id="stock-progress-fill"></div>
   </div>
 
-<div id="stock-hype-message" class="stock-hype-message"></div>
-<div id="stock-message" class="stock-message"></div>
-
-<div id="cta-content" class="cta-content">        
-  
-<div class="important-info-box">
-  <strong>Información importante</strong>
-  <p>
-    Cada entrada es individual. Si realizas un registro grupal, debes ingresar los datos de todas las personas que asistirán, incluyendo a quien realiza el registro.
-  </p>
-  <p>
-    Puedes registrar máximo <strong>5 personas por grupo</strong>. El pago puede hacerse en una sola operación, pero cada participante recibirá su propio código QR.
-  </p>
-  <p>
-  </p>
+  <div id="stock-hype-message" class="stock-hype-message"></div>
+  <div id="stock-message" class="stock-message"></div>
 </div>
 
-        <button type="button" onclick="mostrarFormulario()" class="btn-main big-btn">Iniciar registro</button>
-      </div>
+<div id="cta-content" class="cta-content">        
+  <div class="important-info-box">
+    <strong>Información importante</strong>
+    <p>
+      Cada entrada es individual. Si realizas un registro grupal, debes ingresar los datos de todas las personas que asistirán, incluyendo a quien realiza el registro.
+    </p>
+    <p>
+      Puedes registrar máximo <strong>5 personas por grupo</strong>. El pago puede hacerse en una sola operación, pero cada participante recibirá su propio código QR.
+    </p>
+    <p>
+      Verifica que cada correo esté escrito correctamente, ya que allí llegará el código QR de ingreso.
+    </p>
+  </div>
 
-      <div id="form-wrapper">
+  <button type="button" onclick="mostrarFormulario()" class="btn-main big-btn">Iniciar registro</button>
+</div>     
+
+<div id="form-wrapper">
         <div class="form-container">
           <h3>Formulario de registro</h3>
 
@@ -220,9 +221,9 @@
                 <select id="f-categoria" class="input-field" required>
                   <option value="">Selecciona una categoría</option>
                   <option value="General">Público General</option>
-                  <option value="VIP">Coordinador HELAV</option>
-                  <option value="Cortesía">Personal HELAV</option>
-                  <option value="Staff"></option>
+                  <option value="Coordinador">Coordinador HELAV</option>
+                  <option value="Personal">Personal HELAV</option>
+                  <option value="Otro">Otro</option>
                   <option value="Patrocinante">Patrocinante</option>
                 </select>
               </div>
@@ -244,10 +245,13 @@
                 <button type="button" class="qty-btn qty-plus" onclick="cambiarCantidadEntradas(1)">+</button>
               </div>
 
-              <p class="helper-text">Máximo 5 personas por registro.</p>
-            </div>
+<p class="helper-text">Máximo 5 personas por registro.</p>
+<p class="helper-text entrada-disponible-inline" id="entradas-disponibles-inline">
+  Disponibles: cargando...
+</p>
+</div>
 
-            <div id="integrantes-wrapper" class="integrantes-wrapper"></div>
+<div id="integrantes-wrapper" class="integrantes-wrapper"></div>
 
             <div class="section-title-form">3. Total</div>
 

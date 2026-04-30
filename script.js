@@ -111,11 +111,19 @@ async function cargarStockVisual() {
       throw new Error(data.error || "No se pudo cargar la disponibilidad.");
     }
 
+    const tieneStockEntradas =
+      data.disponible !== undefined ||
+      (data.stock && data.stock.Entradas !== undefined);
+
+    if (!tieneStockEntradas) {
+      throw new Error("La Web App todavía está devolviendo el stock viejo de arepas. Debes publicar una nueva versión del Apps Script.");
+    }
+
     const inicial = Number(data.inicial || TOTAL_INICIAL_ENTRADAS || 300);
     const disponibles = Number(
       data.disponible !== undefined
         ? data.disponible
-        : data.stock?.Entradas || 0
+        : data.stock.Entradas
     );
 
     const vendidas = Math.max(0, inicial - disponibles);
@@ -131,6 +139,7 @@ async function cargarStockVisual() {
 
       setText("stock-message", "🔥 REGISTRO CERRADO - ENTRADAS AGOTADAS");
       setText("stock-progress-text", "AGOTADO");
+      setText("entradas-disponibles-inline", "Disponibles: 0 entradas");
 
       if (barra) {
         barra.style.width = "100%";
@@ -142,16 +151,17 @@ async function cargarStockVisual() {
 
     if (formEl) formEl.style.display = "block";
 
-    let texto = "";
+    let textoBarra = "";
 
     if (disponibles <= 10) {
-      texto = `⚠️ Últimas ${disponibles} entradas`;
+      textoBarra = `⚠️ Últimas ${disponibles} entradas`;
     } else {
-      texto = `${disponibles} disponibles de ${inicial}`;
+      textoBarra = `${disponibles} disponibles de ${inicial}`;
     }
 
-    setText("stock-progress-text", texto);
+    setText("stock-progress-text", textoBarra);
     setText("stock-message", "Disponibilidad actualizada en tiempo real.");
+    setText("entradas-disponibles-inline", `Disponibles: ${disponibles} entradas`);
 
     if (barra) {
       barra.style.width = "0%";
@@ -177,8 +187,9 @@ async function cargarStockVisual() {
 
   } catch (error) {
     console.warn("Error cargando disponibilidad:", error);
-    setText("stock-message", "No se pudo cargar la disponibilidad. Intenta nuevamente.");
+    setText("stock-message", "No se pudo cargar la disponibilidad. Revisa la implementación del Apps Script.");
     setText("stock-progress-text", "No disponible");
+    setText("entradas-disponibles-inline", "Disponibles: no disponible");
   }
 }
 

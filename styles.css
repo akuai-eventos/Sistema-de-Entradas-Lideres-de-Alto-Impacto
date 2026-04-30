@@ -1013,3 +1013,10 @@ footer {
   line-height:1.6;
   font-size:14px;
 }
+
+.entrada-disponible-inline {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #2e7d32;
+  font-weight: 700;
+}
