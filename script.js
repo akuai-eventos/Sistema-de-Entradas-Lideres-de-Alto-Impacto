@@ -308,10 +308,10 @@ function renderIntegrantesAdicionales(cantidadTotal) {
           <label>Categoría <span>*</span></label>
           <select id="integrante-${i}-categoria" class="input-field integrante-categoria" required>
             <option value="">Selecciona una categoría</option>
-            <option value="General">General</option>
-            <option value="VIP">VIP</option>
-            <option value="Cortesía">Cortesía</option>
-            <option value="Staff">Staff</option>
+            <option value="Público General">Público General</option>
+            <option value="Coordinador HELAV">Coordinador HELAV</option>
+            <option value="Personal HELAV">Personal HELAV</option>
+            <option value="Otro">Otro</option>
             <option value="Patrocinante">Patrocinante</option>
           </select>
         </div>
