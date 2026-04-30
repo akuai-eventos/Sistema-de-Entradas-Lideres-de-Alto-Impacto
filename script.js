@@ -445,10 +445,14 @@ if (form) {
     const referencia = document.getElementById("f-referencia").value.trim();
 const capture = document.getElementById("f-capture").files[0];
 
-if (capture && capture.size > 3 * 1024 * 1024) {
-  return mostrarMensaje("El comprobante es muy pesado. Por favor sube una imagen menor a 3 MB.");
-}    
-    const participantes = obtenerParticipantes();
+const MAX_CAPTURE_MB = 5;
+const MAX_CAPTURE_BYTES = MAX_CAPTURE_MB * 1024 * 1024;
+
+if (capture && capture.size > MAX_CAPTURE_BYTES) {
+  return mostrarMensaje(`El comprobante es muy pesado. Por favor sube una imagen menor a ${MAX_CAPTURE_MB} MB.`);
+}
+
+const participantes = obtenerParticipantes();
     const totalUsd = cantidad * PRECIO_ENTRADA_USD;
     const totalBs = totalUsd * TASA_BCV;
 
