@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
   Si usas el mismo Apps Script de las arepas y solo reemplazas Code.gs, normalmente puedes dejar esta URL.
   Si creas una nueva implementación, pega aquí la URL nueva de la Web App.
 */
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwwxLik_jjnwgF2LmNIDoXzh_e5l5ildkn7d3iPgbrVXsRrD1tQs5B3ib_RarMYCJyS/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz7OyV5uOFJO34L9E74mTsrWyLzkPrBipwsToQlNY5Ug758Pk5vW-GS4fENMSbWOivB/exec";
 
 const PRECIO_ENTRADA_USD = 5;
 const MAX_ENTRADAS_POR_REGISTRO = 5;
@@ -509,7 +509,8 @@ function cerrarConfirm() {
 }
 
 async function enviarRegistro() {
-  if (!registroPendiente) {
+  console.log("CLICK EN ENVIAR REGISTRO");
+    if (!registroPendiente) {
     mostrarMensaje("No hay un registro pendiente.");
     return;
   }
@@ -539,12 +540,26 @@ async function enviarRegistro() {
     datos.append("capture_tipo", registroPendiente.capture_tipo);
     datos.append("capture_base64", registroPendiente.capture_base64);
 
-    const response = await fetch(WEB_APP_URL, {
-      method: "POST",
-      body: datos
-    });
+console.log("WEB_APP_URL:", WEB_APP_URL);
+console.log("Datos enviados:", Array.from(datos.entries()));
 
-    const data = await response.json();
+const response = await fetch(WEB_APP_URL, {
+  method: "POST",
+  body: datos
+});
+
+console.log("Status respuesta:", response.status);
+console.log("URL final respuesta:", response.url);
+
+const textoRespuesta = await response.text();
+console.log("Respuesta Apps Script:", textoRespuesta);
+
+let data;
+try {
+  data = JSON.parse(textoRespuesta);
+} catch (err) {
+  throw new Error("Apps Script no devolvió JSON válido. Respuesta: " + textoRespuesta.slice(0, 250));
+}
 
     if (!data.ok) {
       throw new Error(data.error || "No se pudo guardar el registro.");
