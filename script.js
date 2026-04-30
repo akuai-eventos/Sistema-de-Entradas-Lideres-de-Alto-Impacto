@@ -443,7 +443,11 @@ if (form) {
     const asesor = document.getElementById("f-asesor").value.trim();
     const metodo = document.getElementById("f-metodo").value;
     const referencia = document.getElementById("f-referencia").value.trim();
-    const capture = document.getElementById("f-capture").files[0];
+const capture = document.getElementById("f-capture").files[0];
+
+if (capture && capture.size > 3 * 1024 * 1024) {
+  return mostrarMensaje("El comprobante es muy pesado. Por favor sube una imagen menor a 3 MB.");
+}    
     const participantes = obtenerParticipantes();
     const totalUsd = cantidad * PRECIO_ENTRADA_USD;
     const totalBs = totalUsd * TASA_BCV;
